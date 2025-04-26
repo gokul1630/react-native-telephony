@@ -1,5 +1,5 @@
 import { SETTINGS_KEY } from '@/hooks/useSettings';
-import ExpoTelephony from '@/modules/expo-telephony';
+import ExpoTelephony from 'expo-telephony';
 import { saveSentMessage } from '@/services/historyService';
 import { sendTelegramMessage } from '@/services/telegramService';
 import * as SecureStore from 'expo-secure-store';
@@ -48,6 +48,7 @@ const setupBackgroundTasks = async () => {
 	ExpoTelephony.startListening();
 
 	ExpoTelephony.addListener('onMissedCall', async (data) => {
+		console.log(data)
 		const text = `Missed call: ${data.phoneNumber}`;
 		await sendTelegramMessage(
 			settings?.telegramBotToken,
@@ -56,6 +57,7 @@ const setupBackgroundTasks = async () => {
 		);
 	});
 	ExpoTelephony.addListener('onReceiveSMS', async (message) => {
+		console.log(message)
 		const text = `sender: ${message.sender}\nText: ${message.body}`;
 		await sendTelegramMessage(
 			settings?.telegramBotToken,

@@ -1,4 +1,4 @@
-import ExpoTelephony from '@/modules/expo-telephony';
+import ExpoTelephony from 'expo-telephony';
 import { isServiceRunning, startService } from '@/services/NotificationService';
 import { Redirect } from 'expo-router';
 import { useEffect } from 'react';
