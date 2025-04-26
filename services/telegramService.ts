@@ -7,19 +7,42 @@ export async function sendTelegramMessage(
   chatId: string,
   message: string
 ): Promise<void> {
+  if (!botToken && !chatId) {
+    return
+  }
+
   try {
     const url = `${BASE_URL}${botToken}/sendMessage`;
-    const response = await axios.post(url, {
-      chat_id: chatId,
-      text: message,
-      parse_mode: 'HTML',
+    const response = await axios.get(url, {
+      params: {
+        chat_id: chatId,
+        text: message,
+      }
     });
 
     if (!response.data.ok) {
       throw new Error(response.data.description || 'Failed to send message');
     }
-  } catch (error) {
-    console.error('Error sending Telegram message:', error);
+  } catch (error: any) {
+    console.error('Error sending Telegram message:', error.message);
+    throw error;
+  }
+}
+
+
+export async function getChatId(
+  botToken: string,
+): Promise<string> {
+  try {
+    const url = `${BASE_URL}${botToken}/getUpdates`;
+    const response = await axios.get(url)
+
+    if (!response.data.ok) {
+      throw new Error(response.data.description || 'Failed to fetch chatid');
+    }
+    return `${response.data?.result[0]?.message?.from?.id}` || ""
+  } catch (error: any) {
+    console.error('Error sending Telegram message:', error.message);
     throw error;
   }
 }

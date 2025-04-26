@@ -15,7 +15,7 @@ const DEFAULT_SETTINGS: AppSettings = {
   darkMode: false,
 };
 
-const SETTINGS_KEY = 'app_settings';
+export const SETTINGS_KEY = 'app_settings';
 
 export function useSettings() {
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
@@ -54,5 +54,6 @@ export function useSettings() {
     settings,
     saveSettings,
     isLoading,
+    loadSettings,
   };
 }

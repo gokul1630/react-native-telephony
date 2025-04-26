@@ -1,0 +1,22 @@
+apply plugin: 'com.android.library'
+
+group = 'com.gokul.expoTelephony'
+version = '0.6.3'
+
+def expoModulesCorePlugin = new File(project(":expo-modules-core").projectDir.absolutePath, "ExpoModulesCorePlugin.gradle")
+apply from: expoModulesCorePlugin
+applyKotlinExpoModulesCorePlugin()
+useCoreDependencies()
+useDefaultAndroidSdkVersions()
+useExpoPublishing()
+
+android {
+  namespace "com.gokul.expoTelephony"
+  defaultConfig {
+    versionCode 1
+    versionName "0.6.3"
+  }
+  lintOptions {
+    abortOnError false
+  }
+}
